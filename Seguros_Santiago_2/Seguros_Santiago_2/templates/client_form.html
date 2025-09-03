@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard">
+    <h2>{{ 'Editar' if client else 'Nuevo' }} Cliente</h2>
+    
+    <div class="action-buttons">
+        <a href="/agent/clients" class="btn btn-primary">← Volver a Clientes</a>
+    </div>
+
+    <div class="form-container">
+        <form method="POST" action="{{ url_for('create_client') if not client else url_for('edit_client', client_id=client.id_cliente) }}">
+            <div class="form-section">
+                <h3>Información Personal</h3>
+                
+                <div class="form-group">
+                    <label>Código Cliente:</label>
+                    <input type="text" name="codigo_cliente" value="{{ client.codigo_cliente if client }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>ID Usuario:</label>
+                    <input type="number" name="id_usuario" value="{{ client.id_usuario if client }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>RUT:</label>
+                    <input type="text" name="rut" value="{{ client.rut if client }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Nombre:</label>
+                    <input type="text" name="nombre" value="{{ client.nombre if client }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Apellido:</label>
+                    <input type="text" name="apellido" value="{{ client.apellido if client }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Dirección:</label>
+                    <textarea name="direccion" required>{{ client.direccion if client }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Teléfono:</label>
+                    <input type="text" name="telefono" value="{{ client.telefono if client }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" name="correo_electronico" value="{{ client.correo_electronico if client }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Género:</label>
+                    <select name="genero" required>
+                        <option value="Masculino" {{ 'selected' if client and client.genero == 'Masculino' }}>Masculino</option>
+                        <option value="Femenino" {{ 'selected' if client and client.genero == 'Femenino' }}>Femenino</option>
+                        <option value="Otro" {{ 'selected' if client and client.genero == 'Otro' }}>Otro</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Información Económica</h3>
+                
+                <div class="form-group">
+                    <label>Ingresos Anuales:</label>
+                    <input type="number" step="0.01" name="ingresos_anuales" value="{{ client.ingresos_anuales if client }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Gasto Mensual:</label>
+                    <input type="number" step="0.01" name="gasto_mensual" value="{{ client.gasto_mensual if client }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Carga Familiar:</label>
+                    <input type="number" name="carga_familiar" value="{{ client.carga_familiar if client }}" required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>Información de Seguro</h3>
+                
+                <div class="form-group">
+                    <label>Tipo de Seguro:</label>
+                    <select name="id_tipo_seguro" required>
+                        {% for tipo in tipos_seguro %}
+                        <option value="{{ tipo.id_tipo_seguro }}" {{ 'selected' if client and client.id_tipo_seguro == tipo.id_tipo_seguro }}>
+                            {{ tipo.nombre_tipo_seguro }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+    <label>Clasificación Sistema:</label>
+    <select name="id_clasificacion_sistema" disabled style="pointer-events: none; background-color: #f8f9fa;">
+        {% for clasif in clasificaciones %}
+        <option value="{{ clasif.id_clasificacion_sistema }}" {{ 'selected' if client and client.id_clasificacion_sistema == clasif.id_clasificacion_sistema }}>
+            {{ clasif.nombre }}
+        </option>
+        {% endfor %}
+    </select>
+    <input type="hidden" name="id_clasificacion_sistema" value="{{ client.id_clasificacion_sistema if client }}">
+</div>
+
+                <div class="form-group">
+                    <label>Clasificación Agente:</label>
+                    <select name="id_clasificacion_agente" required>
+                        {% for clasif in clasificaciones_agente %}
+                        <option value="{{ clasif.id_clasificacion_agente }}" {{ 'selected' if client and client.id_clasificacion_agente == clasif.id_clasificacion_agente }}>
+                            {{ clasif.nombre }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success">💾 {{ 'Actualizar' if client else 'Crear' }} Cliente</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
