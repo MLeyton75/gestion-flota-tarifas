@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard">
+    <h2>Detalles del Cliente</h2>
+    
+    <div class="action-buttons">
+        <a href="/agent/clients" class="btn btn-primary">← Volver a Clientes</a>
+    </div>
+
+    <div class="client-details">
+        {% if client %}
+        <div class="detail-section">
+            <h3>Información Personal</h3>
+            <p><strong>Código:</strong> {{ client.codigo_cliente }}</p>
+            <p><strong>Nombre:</strong> {{ client.nombre }} {{ client.apellido }}</p>
+            <p><strong>RUT:</strong> {{ client.rut }}</p>
+            <p><strong>Email:</strong> {{ client.correo_electronico }}</p>
+            <p><strong>Teléfono:</strong> {{ client.telefono }}</p>
+            <p><strong>Dirección:</strong> {{ client.direccion }}</p>
+            <p><strong>Género:</strong> {{ client.genero }}</p>
+        </div>
+
+        <div class="detail-section">
+            <h3>Información Económica</h3>
+            <p><strong>Ingresos Anuales:</strong> ${{ client.ingresos_anuales }}</p>
+            <p><strong>Gasto Mensual:</strong> ${{ client.gasto_mensual }}</p>
+            <p><strong>Carga Familiar:</strong> {{ client.carga_familiar }} personas</p>
+        </div>
+
+        <div class="detail-section">
+            <h3>Información de Seguro</h3>
+            <p><strong>Tipo de Seguro:</strong> {{ client.nombre_tipo_seguro }}</p>
+            <p><strong>Clasificación Sistema:</strong> {{ client.clasificacion_sistema }}</p>
+            <p><strong>Clasificación Agente:</strong> {{ client.clasificacion_agente }}</p>
+        </div>
+        {% else %}
+        <p>Cliente no encontrado.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

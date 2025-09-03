@@ -1,0 +1,51 @@
+{% extends "base.html" %} 
+
+{% block content %} 
+<div class="dashboard">
+    <h2>Mi Perfil - Cliente</h2>
+    
+    <!-- DEBUG: Mostrar datos del cliente (puedes remover esto después) -->
+    <!--
+    <div style="background: #f0f0f0; padding: 10px; margin: 10px 0;">
+        <h4>DEBUG - Datos del cliente:</h4>
+        <pre>{{ client | tojson }}</pre>
+    </div>
+    -->
+    
+    <div class="client-info">
+        <div class="info-card">
+            <h3>Información Personal</h3>
+            <p><strong>Nombre:</strong> {{ client.nombre }} {{ client.apellido }}</p>
+            <p><strong>RUT:</strong> {{ client.rut }}</p>
+            <p><strong>Email:</strong> {{ client.correo_electronico }}</p>
+            <p><strong>Teléfono:</strong> {{ client.telefono }}</p>
+            <p><strong>Dirección:</strong> {{ client.direccion }}</p>
+            <p><strong>Género:</strong> {{ client.genero }}</p>
+        </div>
+        
+        <div class="info-card">
+            <h3>Información Económica</h3>
+            <p><strong>Ingresos Anuales:</strong> ${{ client.ingresos_anuales }}</p>
+            <p><strong>Gasto Mensual:</strong> ${{ client.gasto_mensual }}</p>
+            <p><strong>Carga Familiar:</strong> {{ client.carga_familiar }} personas</p>
+        </div>
+        
+        <div class="info-card">
+            <h3>Información de Seguro</h3>
+            <p><strong>Tipo de Seguro:</strong> {{ client.nombre_tipo_seguro if client.nombre_tipo_seguro else 'No asignado' }}</p>
+        </div>
+        
+        <!-- Información de clasificación (solo para visualización interna) -->
+        <div class="info-card">
+            <h3>Clasificación Sistema</h3>
+            <p><strong>Clasificación Sistema:</strong> {{ client.clasificacion_sistema if client.clasificacion_sistema else 'No asignada' }}</p>
+            <p><strong>Clasificación Agente:</strong> {{ client.clasificacion_agente if client.clasificacion_agente else 'No asignada' }}</p>
+        </div>
+    </div>
+    
+    <!-- Botón para editar (solo información permitida para clientes) -->
+    <div class="action-buttons">
+        <a href="/client/edit" class="btn btn-primary">✏️ Editar Mi Información</a>
+    </div>
+</div>
+{% endblock %}

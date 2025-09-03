@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard">
+    <h2>Dashboard - Agente</h2>
+    
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <h3>Total Clientes</h3>
+            <p class="stat-number">{{ clients|length }}</p>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <a href="/agent/clients" class="btn btn-primary">Gestionar Clientes</a>
+        <a href="/agent/client/new" class="btn btn-success">Nuevo Cliente</a>
+    </div>
+
+    <div class="recent-clients">
+        <h3>Clientes Recientes</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients[:5] %}
+                <tr>
+                    <td>{{ client.codigo_cliente }}</td>
+                    <td>{{ client.nombre }} {{ client.apellido }}</td>
+                    <td>{{ client.correo_electronico }}</td>
+                    <td>{{ client.telefono }}</td>
+                    <td>
+                        <a href="/agent/client/edit/{{ client.id_cliente }}" class="btn btn-sm btn-warning">Editar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

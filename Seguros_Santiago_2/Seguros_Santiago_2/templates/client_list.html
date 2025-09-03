@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard">
+    <h2>Gestión de Clientes</h2>
+    
+    <div class="action-buttons">
+        <a href="/agent/dashboard" class="btn btn-primary">← Volver al Dashboard</a>
+        <a href="/agent/client/new" class="btn btn-success">+Nuevo Cliente</a>
+    </div>
+
+    <div class="clients-table">
+        <h3>Lista de Clientes</h3>
+        
+        {% if clients %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>RUT</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Tipo Seguro</th>
+                    <th>Clasificación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                <tr>
+                    <td>{{ client.codigo_cliente }}</td>
+                    <td>{{ client.nombre }} {{ client.apellido }}</td>
+                    <td>{{ client.rut }}</td>
+                    <td>{{ client.correo_electronico }}</td>
+                    <td>{{ client.telefono }}</td>
+                    <td>{{ client.nombre_tipo_seguro }}</td>
+                    <td>{{ client.clasificacion_sistema }}</td>
+                    <td>
+                        <a href="/agent/client/edit/{{ client.id_cliente }}" class="btn btn-sm btn-warning">✏️ Editar</a>
+                        <form action="/agent/client/delete/{{ client.id_cliente }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro?')">🗑️ Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No hay clientes registrados.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

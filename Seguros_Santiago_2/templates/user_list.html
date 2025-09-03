@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard">
+    <h2>Gestión de Usuarios</h2>
+    
+    <div class="action-buttons">
+        <a href="/agent/dashboard" class="btn btn-primary">← Volver al Dashboard</a>
+    </div>
+
+    <div class="users-table">
+        <h3>Lista de Usuarios</h3>
+        
+        {% if users %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Fecha Creación</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id_usuario }}</td>
+                    <td>{{ user.nombre_usuario }}</td>
+                    <td>{{ user.correo_electronico }}</td>
+                    <td>{{ user.nombre_rol }}</td>
+                    <td>{{ user.fecha_creacion }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No hay usuarios registrados.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
